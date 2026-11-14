@@ -1,6 +1,8 @@
 import { Router } from 'express';
 import authRoutes from './modules/auth/auth.routes.js';
 import usersRoutes from './modules/users/users.routes.js';
+import categoriesRoutes from './modules/categories/categories.routes.js';
+import servicesRoutes from './modules/services/services.routes.js';
 
 export const api = Router();
 
@@ -10,3 +12,5 @@ api.get('/', (_req, res) => {
 
 api.use('/auth', authRoutes);
 api.use('/users', usersRoutes);
+api.use('/categories', categoriesRoutes);
+api.use('/services', servicesRoutes);

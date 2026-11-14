@@ -21,6 +21,8 @@ z.config({
         return iss.format === 'email' ? 'Correo electrónico inválido' : 'Formato de texto inválido';
       case 'invalid_value':
         return iss.values.length === 1 ? `Valor inválido (se esperaba ${JSON.stringify(iss.values[0])})` : `Valor inválido. Opciones: ${iss.values.join(', ')}`;
+      case 'unrecognized_keys':
+        return `Campo(s) no permitido(s): ${iss.keys.join(', ')}`;
       default:
         return undefined;
     }
