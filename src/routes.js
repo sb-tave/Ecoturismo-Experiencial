@@ -3,6 +3,9 @@ import authRoutes from './modules/auth/auth.routes.js';
 import usersRoutes from './modules/users/users.routes.js';
 import categoriesRoutes from './modules/categories/categories.routes.js';
 import servicesRoutes from './modules/services/services.routes.js';
+import bookingsRoutes from './modules/bookings/bookings.routes.js';
+import paymentsRoutes from './modules/payments/payments.routes.js';
+import notificationsRoutes from './modules/notifications/notifications.routes.js';
 
 export const api = Router();
 
@@ -14,3 +17,6 @@ api.use('/auth', authRoutes);
 api.use('/users', usersRoutes);
 api.use('/categories', categoriesRoutes);
 api.use('/services', servicesRoutes);
+api.use('/bookings', bookingsRoutes);
+api.use('/payments', paymentsRoutes);
+api.use('/notifications', notificationsRoutes);
