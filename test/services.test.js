@@ -202,6 +202,7 @@ test('RF-13 filtro por fechas disponibles (alojamiento por noches, actividad por
   assert.deepEqual(await ids(`fecha_inicio=${d(2)}&fecha_fin=${d(2)}&personas=3`), new Set([act.id_servicio])); // alojamiento no admite 0 noches
   assert.deepEqual(await ids(`fecha_inicio=${d(2)}&fecha_fin=${d(2)}&personas=6`), new Set());
   assert.equal((await api('GET', `/api/services?fecha_inicio=${d(1)}`)).status, 400);
+  assert.equal((await api('GET', '/api/services?fecha_inicio=2026-02-30&fecha_fin=2026-03-02')).status, 400); // fecha inexistente
 });
 
 test('RF-17/RF-18 disponibilidad: define cupos por día, consulta el calendario y bloquea fechas', async () => {

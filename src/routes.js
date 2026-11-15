@@ -6,6 +6,8 @@ import servicesRoutes from './modules/services/services.routes.js';
 import bookingsRoutes from './modules/bookings/bookings.routes.js';
 import paymentsRoutes from './modules/payments/payments.routes.js';
 import notificationsRoutes from './modules/notifications/notifications.routes.js';
+import complaintsRoutes from './modules/complaints/complaints.routes.js';
+import adminRoutes from './modules/admin/admin.routes.js';
 
 export const api = Router();
 
@@ -20,3 +22,5 @@ api.use('/services', servicesRoutes);
 api.use('/bookings', bookingsRoutes);
 api.use('/payments', paymentsRoutes);
 api.use('/notifications', notificationsRoutes);
+api.use('/complaints', complaintsRoutes);
+api.use('/admin', adminRoutes);

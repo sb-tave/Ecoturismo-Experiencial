@@ -2,7 +2,11 @@ import { config } from '../config/env.js';
 
 const ISO = /^\d{4}-\d{2}-\d{2}$/;
 
-export const isISODate = (s) => typeof s === 'string' && ISO.test(s) && new Date(`${s}T00:00:00Z`).toISOString().slice(0, 10) === s;
+export const isISODate = (s) => {
+  if (typeof s !== 'string' || !ISO.test(s)) return false;
+  const t = Date.parse(`${s}T00:00:00Z`);
+  return !Number.isNaN(t) && new Date(t).toISOString().slice(0, 10) === s; // rechaza 2026-02-30 o 2026-13-45
+};
 
 // Fecha de hoy (AAAA-MM-DD) en la zona horaria de la aplicación.
 export const todayISO = () =>

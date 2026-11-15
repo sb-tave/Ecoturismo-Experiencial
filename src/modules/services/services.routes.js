@@ -9,6 +9,7 @@ import { idParam, isoDate, pagination } from '../../utils/schemas.js';
 import * as service from './services.service.js';
 import * as availability from './availability.service.js';
 import * as photos from './photos.service.js';
+import reviewsRoutes from '../reviews/reviews.routes.js';
 
 const router = Router();
 const host = [authenticate, requireRole('ANFITRION', 'NEGOCIO_LOCAL')];
@@ -132,5 +133,8 @@ router.delete('/:id/photos/:idFoto', ...host, validate({ params: photoParams }),
   await photos.deletePhoto(req.user, id, idFoto);
   res.json({ mensaje: 'Foto eliminada' });
 }));
+
+// ---- Calificaciones y reseñas (RF-29, RF-30) ----
+router.use('/:id/reviews', reviewsRoutes);
 
 export default router;
