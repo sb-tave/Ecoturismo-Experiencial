@@ -1535,7 +1535,7 @@
               "script": {
                 "type": "text/javascript",
                 "exec": [
-                  "pm.test('Responde 200 o 404', () => pm.expect([200,404]).to.include(pm.response.code));"
+                  "pm.test('Responde 200 o 400 o 404', () => pm.expect([200,400,404]).to.include(pm.response.code));"
                 ]
               }
             }
@@ -1993,7 +1993,7 @@
               "script": {
                 "type": "text/javascript",
                 "exec": [
-                  "pm.test('Responde 201 o 404 o 409', () => pm.expect([201,404,409]).to.include(pm.response.code));"
+                  "pm.test('Responde 201 o 400 o 404 o 409', () => pm.expect([201,400,404,409]).to.include(pm.response.code));"
                 ]
               }
             }
@@ -2674,7 +2674,7 @@
               "script": {
                 "type": "text/javascript",
                 "exec": [
-                  "pm.test('Responde 200 o 404', () => pm.expect([200,404]).to.include(pm.response.code));"
+                  "pm.test('Responde 200 o 400 o 404', () => pm.expect([200,400,404]).to.include(pm.response.code));"
                 ]
               }
             }

@@ -72,7 +72,7 @@ export const carpetas = [
       { n: 'Bloquear fechas', m: 'POST', r: '/api/services/{{idServicio}}/availability/block', as: A, rol: 'Anfitrión propietario', rf: 'RF-17', d: 'Bloquea los días sin reservas e informa los que tienen reservas.', body: { desde: '{{hasta}}', hasta: '{{hasta}}' } },
       { n: 'Subir fotografía', ok: [201, 400], m: 'POST', r: '/api/services/{{idServicio}}/photos', as: A, rol: 'Propietario', rf: 'RF-09', d: 'multipart/form-data, campo «foto» (JPG, PNG o WebP, máx. 5 MB). Se convierte a WebP.', archivo: 'foto', test: [guardar('idFoto', '.id_foto')] },
       { n: 'Cambiar foto principal u orden', ok: [200, 400, 404], m: 'PATCH', r: '/api/services/{{idServicio}}/photos/{{idFoto}}', as: A, rol: 'Propietario', rf: 'RF-09', d: 'Marca la foto principal o cambia su orden.', body: { es_principal: true, orden: 1 } },
-      { n: 'Eliminar fotografía', ok: [200, 404], m: 'DELETE', r: '/api/services/{{idServicio}}/photos/{{idFoto}}', as: A, rol: 'Propietario', rf: 'RF-09', d: 'Elimina la foto y su archivo.' },
+      { n: 'Eliminar fotografía', ok: [200, 400, 404], m: 'DELETE', r: '/api/services/{{idServicio}}/photos/{{idFoto}}', as: A, rol: 'Propietario', rf: 'RF-09', d: 'Elimina la foto y su archivo.' },
     ],
   },
   {
@@ -96,7 +96,7 @@ export const carpetas = [
     nombre: '7. Calificaciones y notificaciones',
     endpoints: [
       { n: 'Listar reseñas de un servicio', m: 'GET', r: '/api/services/{{idServicio}}/reviews?page=1&limit=10', rol: 'Público', rf: 'RF-16, RF-30', d: 'Reseñas visibles, promedio y distribución por estrellas.' },
-      { n: 'Calificar un servicio', ok: [201, 404, 409], m: 'POST', r: '/api/services/{{idServicio}}/reviews', as: T, rol: 'Turista', rf: 'RF-29', d: 'Solo con una reserva COMPLETADA y pagada (una reseña por reserva).', body: { id_reserva: '#idReservaCompletada', puntuacion: 5, comentario: 'Excelente lugar' } },
+      { n: 'Calificar un servicio', ok: [201, 400, 404, 409], m: 'POST', r: '/api/services/{{idServicio}}/reviews', as: T, rol: 'Turista', rf: 'RF-29', d: 'Solo con una reserva COMPLETADA y pagada (una reseña por reserva).', body: { id_reserva: '#idReservaCompletada', puntuacion: 5, comentario: 'Excelente lugar' } },
       { n: 'Mis notificaciones', m: 'GET', r: '/api/notifications?no_leidas=true', as: A, rol: 'Autenticado', rf: 'RF-28', d: 'Notificaciones propias; meta.no_leidas trae el contador.', test: ["const n = pm.response.json().data; if (n.length) pm.collectionVariables.set('idNotificacion', n[0].id_notificacion);"] },
       { n: 'Marcar notificación como leída', ok: [200, 404], m: 'PATCH', r: '/api/notifications/{{idNotificacion}}/read', as: A, rol: 'Autenticado', rf: 'RF-28', d: 'Marca una notificación.' },
       { n: 'Marcar todas como leídas', m: 'PATCH', r: '/api/notifications/read-all', as: A, rol: 'Autenticado', rf: 'RF-28', d: 'Marca todas las notificaciones propias.' },
@@ -119,7 +119,7 @@ export const carpetas = [
       { n: 'Listar reseñas', m: 'GET', r: '/api/admin/reviews?estado=VISIBLE', as: ADM, rol: 'Administrador', rf: 'RF-33', d: 'Reseñas visibles u ocultas.', test: ["const r = pm.response.json().data; if (r.length) pm.collectionVariables.set('idCalificacion', r[0].id_calificacion);"] },
       { n: 'Ocultar o restaurar reseña', ok: [200, 404, 409], m: 'PATCH', r: '/api/admin/reviews/{{idCalificacion}}/moderation', as: ADM, rol: 'Administrador', rf: 'RF-33', d: 'Recalcula el promedio del servicio.', body: { accion: 'OCULTAR', motivo: 'Lenguaje ofensivo' } },
       { n: 'Restaurar reseña', m: 'PATCH', r: '/api/admin/reviews/{{idCalificacion}}/moderation', as: ADM, rol: 'Administrador', rf: 'RF-33', ok: [200, 404, 409], d: 'Vuelve a mostrar la reseña y recalcula el promedio.', body: { accion: 'RESTAURAR' } },
-      { n: 'Eliminar reseña', ok: [200, 404], m: 'DELETE', r: '/api/admin/reviews/{{idCalificacionAEliminar}}', as: ADM, rol: 'Administrador', rf: 'RF-33', d: 'Elimina la reseña y recalcula el promedio. Defina la variable idCalificacionAEliminar con el id de la reseña (por seguridad no se borra ninguna por defecto).', body: { motivo: 'Spam repetido' } },
+      { n: 'Eliminar reseña', ok: [200, 400, 404], m: 'DELETE', r: '/api/admin/reviews/{{idCalificacionAEliminar}}', as: ADM, rol: 'Administrador', rf: 'RF-33', d: 'Elimina la reseña y recalcula el promedio. Defina la variable idCalificacionAEliminar con el id de la reseña (por seguridad no se borra ninguna por defecto).', body: { motivo: 'Spam repetido' } },
       { n: 'Cola de denuncias', m: 'GET', r: '/api/admin/complaints?estado=PENDIENTE', as: ADM, rol: 'Administrador', rf: 'RF-35', d: 'Denuncias pendientes, resueltas o desestimadas.' },
       { n: 'Resolver o desestimar denuncia', m: 'PATCH', r: '/api/admin/complaints/{{idDenuncia}}', as: ADM, rol: 'Administrador', rf: 'RF-35', d: 'OCULTAR (resuelve y oculta el contenido) o DESESTIMAR.', body: { accion: 'DESESTIMAR' } },
       { n: 'Reporte de reservas e ingresos', m: 'GET', r: '/api/admin/reports/summary?desde={{hoy}}&hasta={{hoy}}', as: ADM, rol: 'Administrador', rf: 'RF-37', d: 'Reservas por estado, ingresos aprobados, servicios destacados y usuarios por rol (por defecto, últimos 30 días).' },

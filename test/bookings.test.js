@@ -1,6 +1,6 @@
 import test, { before, after } from 'node:test';
 import assert from 'node:assert/strict';
-import { setupDb, startServer, registerUser, createAdmin, pool } from './helpers.js';
+import { setupDb, startServer, registerUser, createAdmin, pool, PASSWORD } from './helpers.js';
 import { cupos, d, escenario, pagar, reservar } from './fixtures.js';
 
 let srv;
@@ -171,4 +171,27 @@ test('RF-36 el administrador cancela una reserva confirmada y se notifica al tur
   assert.ok(nt.body.data.some((n) => n.tipo === 'RESERVA_CANCELADA' && n.mensaje.includes('Mantenimiento')));
   const nh = await api('GET', '/api/notifications', { token: host.token });
   assert.ok(nh.body.data.some((n) => n.tipo === 'RESERVA_CANCELADA'));
+});
+
+test('RF-08 eliminar una publicación con reservas solo la desactiva y no se borra', async () => {
+  const { host, servicio } = await escenario(api, { cupos: 1 });
+  const t = await registerUser(api);
+  await reservar(api, t.token, servicio.id_servicio, d(2), d(3));
+  const del = await api('DELETE', `/api/services/${servicio.id_servicio}`, { token: host.token });
+  assert.equal(del.status, 200);
+  assert.equal(del.body.eliminado, false);
+  assert.equal(del.body.estado, 'INACTIVO');
+  assert.equal((await api('GET', `/api/services/${servicio.id_servicio}`, { token: host.token })).body.estado, 'INACTIVO');
+  assert.equal((await api('GET', `/api/services/${servicio.id_servicio}`)).status, 404); // ya no aparece en el catálogo
+});
+
+test('RNF-07 no se elimina una cuenta con reservas activas hasta cancelarlas', async () => {
+  const { servicio } = await escenario(api, { cupos: 1 });
+  const t = await registerUser(api);
+  const r = (await reservar(api, t.token, servicio.id_servicio, d(2), d(3))).body;
+  const bloqueada = await api('DELETE', '/api/users/me', { token: t.token, body: { contrasena: PASSWORD } });
+  assert.equal(bloqueada.status, 409);
+  assert.equal(bloqueada.body.error.code, 'TIENE_RESERVAS_ACTIVAS');
+  await api('PATCH', `/api/bookings/${r.id_reserva}/cancel`, { token: t.token });
+  assert.equal((await api('DELETE', '/api/users/me', { token: t.token, body: { contrasena: PASSWORD } })).status, 200);
 });

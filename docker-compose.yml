@@ -1,0 +1,49 @@
+# Entorno local completo:  docker compose up --build
+#   API:         http://localhost:3000   (health: /health)
+#   PostgreSQL:  localhost:5432          (usuario y clave: postgres / postgres)
+# Para producción cambie todas las claves y use HTTPS (ver README).
+services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: ecoturismo
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./docker/initdb:/docker-entrypoint-initdb.d:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d ecoturismo"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  api:
+    build: .
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - "3000:3000"
+    environment:
+      NODE_ENV: production
+      PORT: 3000
+      DATABASE_URL: postgres://postgres:postgres@db:5432/ecoturismo
+      JWT_SECRET: ${JWT_SECRET:-clave-de-demostracion-cambiar-antes-de-publicar-0000}
+      ADMIN_EMAIL: ${ADMIN_EMAIL:-admin@ecoturismo.local}
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD:-Admin12345}
+      CORS_ORIGINS: ${CORS_ORIGINS:-http://localhost:5173,http://localhost:8080}
+      PUBLIC_BASE_URL: http://localhost:3000
+      # En local no hay HTTPS: en producción déjelos en true detrás de un proxy con TLS
+      FORCE_HTTPS: "false"
+      TRUST_PROXY: "false"
+      PAYMENT_ALLOW_FORCED_RESULT: "true"
+    volumes:
+      - uploads:/app/uploads
+    command: sh -c "node scripts/migrate.js && node scripts/seed.js && node src/server.js"
+
+volumes:
+  pgdata:
+  uploads:
