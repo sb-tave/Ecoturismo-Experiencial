@@ -24,6 +24,7 @@ const result = spawnSync(process.execPath, ['--test', '--test-concurrency=1', ..
     UPLOAD_MAX_MB: '5',
     PAYMENT_ALLOW_FORCED_RESULT: 'true',
     PUBLIC_BASE_URL: 'http://localhost:3000',
+    CORS_ORIGINS: 'http://localhost:5173',
   },
 });
 process.exit(result.status ?? 1);
