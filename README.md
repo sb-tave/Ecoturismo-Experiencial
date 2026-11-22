@@ -2,7 +2,7 @@
 
 API REST del marketplace de ecoturismo: publicación, búsqueda y reserva de alojamientos rurales, actividades de naturaleza y
 negocios locales, con pagos simulados, calificaciones, moderación y reportes. Implementa los requisitos funcionales
-(RF-01 a RF-37) y la arquitectura definida en el proyecto de Ingeniería de Software I (Entrega 1).
+(RF-01 a RF-37) y la arquitectura definida en el proyecto de Ingeniería de Software I.
 
 **En números:** 57 endpoints · 10 tablas · 74 pruebas automáticas (incluye concurrencia y seguridad) · 0 vulnerabilidades en `npm audit`.
 
