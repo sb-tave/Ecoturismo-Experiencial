@@ -35,11 +35,11 @@ Al terminar tendrás funcionando en tu computador:
 
 Necesitarás **tres ventanas abiertas a la vez**: Docker Desktop, una ventana de PowerShell para el backend y otra para el frontend.
 
-El repositorio contiene dos proyectos:
+El repositorio contiene dos carpetas:
 
 ```
-├── ecoturismo-backend/    API REST + base de datos PostgreSQL (se ejecuta en Docker)
-└── raiz-frontend/         Aplicación web hecha con Vue (se ejecuta con Node.js)
+├── Backend/    API REST + base de datos PostgreSQL (se ejecuta en Docker)
+└── Frontend/         Aplicación web hecha con Vue (se ejecuta con Node.js)
 ```
 
 > Si tus carpetas se llaman distinto, no hay problema. Lo importante es esto: la carpeta del **backend** es la que contiene
@@ -117,7 +117,7 @@ Elige una de estas dos formas:
 - **Con Git:** si lo tienes instalado, ejecuta `git clone <URL-del-repositorio>`.
 
 > **Atención con las carpetas repetidas.** Al extraer, puede quedar una carpeta dentro de otra con el mismo nombre.
-> La carpeta correcta es la que contiene las dos carpetas del proyecto (`ecoturismo-backend` y `raiz-frontend`).
+> La carpeta correcta es la que contiene las dos carpetas del proyecto (`Backend` y `Frontend`).
 > Si tienes copias viejas del proyecto, bórralas o renómbralas para no confundirte de carpeta.
 
 **Cómo abrir PowerShell en la carpeta correcta.** Entra a la carpeta en el Explorador de archivos, haz clic en la barra de direcciones,
@@ -128,7 +128,7 @@ cd C:\Users\TU_USUARIO\Downloads\raiz
 dir
 ```
 
-Cambia `TU_USUARIO` y la ruta por las tuyas. Con `dir` debes ver las carpetas `ecoturismo-backend` y `raiz-frontend`.
+Cambia `TU_USUARIO` y la ruta por las tuyas. Con `dir` debes ver las carpetas `Backend` y `Frontend`.
 
 > Escribe los comandos **de uno en uno**. Si pegas varias líneas, Windows muestra una advertencia: es normal, puedes aceptarla.
 
@@ -141,7 +141,7 @@ Abre una ventana de PowerShell en la carpeta del proyecto (la de la Parte 2).
 1. Entra a la carpeta del backend:
 
    ```powershell
-   cd ecoturismo-backend
+   cd Backend
    ```
 
 2. Comprueba que estás en el lugar correcto:
@@ -151,7 +151,7 @@ Abre una ventana de PowerShell en la carpeta del proyecto (la de la Parte 2).
    ```
 
    Debes ver `docker-compose.yml`, `Dockerfile`, `package.json`, `src`, `db` y `scripts`.
-   Si no los ves, estás en la carpeta equivocada (prueba entrando a otra carpeta interna con `cd ecoturismo-backend`).
+   Si no los ves, estás en la carpeta equivocada (prueba entrando a otra carpeta interna con `cd Backend`).
 
 3. Asegúrate de que **Docker Desktop esté abierto** y diga **Engine running**.
 
@@ -183,7 +183,7 @@ Esto crea las cuentas de prueba y los destinos de ejemplo.
 2. Entra a la carpeta del backend:
 
    ```powershell
-   cd ecoturismo-backend
+   cd Backend
    ```
 
    (Si abriste PowerShell directamente en la carpeta del proyecto. Si no, usa la ruta completa, igual que en la Parte 2.)
@@ -209,7 +209,7 @@ Abre una **tercera ventana de PowerShell**.
 1. Entra a la carpeta del frontend:
 
    ```powershell
-   cd raiz-frontend
+   cd Frontend
    ```
 
 2. Comprueba:
@@ -343,7 +343,7 @@ docker compose down
 ### Cómo agregar un puerto a `CORS_ORIGINS`
 
 1. Detén el backend con **Ctrl + C** en su ventana.
-2. Abre `ecoturismo-backend\docker-compose.yml` con el Bloc de notas y busca esta línea:
+2. Abre `Backend\docker-compose.yml` con el Bloc de notas y busca esta línea:
 
    ```yaml
    CORS_ORIGINS: ${CORS_ORIGINS:-http://localhost:5173,http://localhost:8080}
@@ -364,7 +364,7 @@ docker compose down
 
 ## Documentación técnica
 
-Para quienes quieran ir más allá del paso a paso (carpeta `ecoturismo-backend`):
+Para quienes quieran ir más allá del paso a paso (carpeta `Backend`):
 
 - `README.md` del backend: arquitectura, variables de entorno, reglas de negocio, seguridad y pruebas automáticas.
 - `docs/API.md`: referencia de los 57 endpoints.
