@@ -1,0 +1,88 @@
+/* Piezas reutilizables entre pantallas */
+
+.spinner {
+  display: inline-block;
+  width: 18px;
+  height: 18px;
+  border: 2px solid rgba(40, 82, 61, 0.2);
+  border-top-color: #28523d;
+  border-radius: 50%;
+  animation: girar 0.7s linear infinite;
+  vertical-align: middle;
+}
+
+.spinner.blanco {
+  border-color: rgba(255, 255, 255, 0.35);
+  border-top-color: #fff;
+}
+
+@keyframes girar {
+  to { transform: rotate(360deg); }
+}
+
+.bloque-cargando {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 40px 0;
+  font-size: 12px;
+  color: #77776f;
+}
+
+.aviso-error,
+.aviso-ok,
+.aviso-info {
+  border-radius: 10px;
+  padding: 11px 13px;
+  font-size: 12px;
+  line-height: 1.45;
+  margin: 12px 0;
+}
+
+.aviso-error { background: #fbeaea; color: #8d2f2f; border: 1px solid #f0c9c9; }
+.aviso-ok { background: #e8f2e8; color: #28523d; border: 1px solid #cfe3cf; }
+.aviso-info { background: #eef2ea; color: #55604f; border: 1px solid #dfe5d8; }
+
+.aviso-error button {
+  background: none;
+  border: none;
+  color: inherit;
+  text-decoration: underline;
+  font-size: 12px;
+  padding: 0;
+  margin-left: 6px;
+}
+
+.campo-error {
+  display: block;
+  margin-top: 5px;
+  font-size: 11px;
+  color: #a33a3a;
+}
+
+.btn-primario,
+.btn-secundario,
+.btn-peligro {
+  width: 100%;
+  height: 46px;
+  border-radius: 10px;
+  border: none;
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.btn-primario { background: #28523d; color: #fff; }
+.btn-primario:hover:not(:disabled) { background: #1d402e; }
+.btn-secundario { background: #fff; color: #28523d; border: 1px solid #cfd8c9; }
+.btn-peligro { background: #fff; color: #a33a3a; border: 1px solid #e3c4c4; }
+
+.btn-primario:disabled,
+.btn-secundario:disabled,
+.btn-peligro:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
